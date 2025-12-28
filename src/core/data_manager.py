@@ -983,7 +983,7 @@ class DataManager:
         all_data = {}
         loaded_count = 0
 
-        for match_id in match_ids[:2]:
+        for match_id in match_ids:
             df = self.load_tracking_data(match_id, sample_rate)
             if df is not None:
                 all_data[match_id] = df
