@@ -63,7 +63,7 @@ class TrackingVisualization(BaseVisualization):
         logger.info("📊 [TrackingViz] Preparing tracking data...")
 
         try:
-            from core.data_manager import data_manager
+            from src.core.data_manager import data_manager
 
             # Get tracking data
             tracking_data = data_manager.tracking_data

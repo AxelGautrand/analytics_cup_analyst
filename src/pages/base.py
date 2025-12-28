@@ -15,14 +15,14 @@ import yaml
 from dash import Input, Output, State, dcc, html
 from dash.exceptions import PreventUpdate
 
-from components.widgets.auto_chart import AutoChartWidget
-from components.widgets.filter import CompactFilterWidget
-from components.widgets.player_card import PlayerAttributesWidget
-from components.widgets.player_info import PlayerInfoWidget
-from components.widgets.player_roles import PlayerStyleProfileWidget
-from components.widgets.registry import WidgetConfig, WidgetRegistry
-from components.widgets.tracking_widget import TrackingWidget
-from core.data_manager import data_manager
+from src.components.widgets.auto_chart import AutoChartWidget
+from src.components.widgets.filter import CompactFilterWidget
+from src.components.widgets.player_card import PlayerAttributesWidget
+from src.components.widgets.player_info import PlayerInfoWidget
+from src.components.widgets.player_roles import PlayerStyleProfileWidget
+from src.components.widgets.registry import WidgetConfig, WidgetRegistry
+from src.components.widgets.tracking_widget import TrackingWidget
+from src.core.data_manager import data_manager
 
 # Get module logger
 logger = logging.getLogger(__name__)
@@ -493,7 +493,7 @@ class PageBase:
         """
         try:
             # Use the global app from webapp
-            from main import app
+            from analytics_cup_analyst.main import app
 
             # Create the callback
             @app.callback(output, inputs)

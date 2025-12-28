@@ -9,16 +9,16 @@ import pandas as pd
 import plotly.graph_objects as go
 from dash import Input, Output, State, dcc, html
 
-from components.widgets.charts import ChartWidget
-from components.widgets.filter import CompactFilterWidget
-from components.widgets.registry import WidgetRegistry
-from core.data_manager import data_manager
-from core.logging_config import logger
-from pages.match.page import match_page, match_page_instance
-from pages.player_focus.page import player_focus_page, player_focus_page_instance
-from pages.players.page import players_page, players_page_instance
-from pages.team_focus.page import team_focus_page, team_focus_page_instance
-from pages.teams.page import teams_page, teams_page_instance
+from src.components.widgets.charts import ChartWidget
+from src.components.widgets.filter import CompactFilterWidget
+from src.components.widgets.registry import WidgetRegistry
+from src.core.data_manager import data_manager
+from src.core.logging_config import logger
+from src.pages.match.page import match_page, match_page_instance
+from src.pages.player_focus.page import player_focus_page, player_focus_page_instance
+from src.pages.players.page import players_page, players_page_instance
+from src.pages.team_focus.page import team_focus_page, team_focus_page_instance
+from src.pages.teams.page import teams_page, teams_page_instance
 
 IS_RENDER = os.getenv("RENDER", "").lower() == "true"
 
@@ -78,12 +78,12 @@ LOGO_RIGHT = "logo/sk_logo.png"
 external_stylesheets = [
     dbc.themes.BOOTSTRAP,
     "https://cdn.jsdelivr.net/npm/gridstack@5.1.0/dist/gridstack.min.css",
-    "/assets/css/variables.css",
-    "/assets/css/base.css",
-    "/assets/css/layout.css",
-    "/assets/css/components.css",
-    "/assets/css/pages.css",
-    "/assets/css/utilities.css",
+    "assets/css/variables.css",
+    "assets/css/base.css",
+    "assets/css/layout.css",
+    "assets/css/components.css",
+    "assets/css/pages.css",
+    "assets/css/utilities.css",
 ]
 
 external_scripts = ["https://cdn.jsdelivr.net/npm/gridstack@5.1.0/dist/gridstack-h5.js"]
@@ -136,7 +136,7 @@ header = html.Header(
                             src=app.get_asset_url(LOGO_RIGHT), className="header-logo"
                         ),
                         html.H1(
-                            "PySport × Skillcorner — Tactical Intelligence",
+                            "PySport × Skillcorner — Analyst Cup Submission",
                             className="header-title",
                         ),
                     ],
@@ -525,7 +525,7 @@ def update_all_widgets_from_filters(filter_data):
 
         # Widget 1: Player Info
         player_widget = WidgetRegistry.get_instance("player-info")
-        from components.widgets.player_info import PlayerInfoWidget
+        from src.components.widgets.player_info import PlayerInfoWidget
 
         if player_widget and isinstance(player_widget, PlayerInfoWidget):
             player_content = player_widget.update_from_filters(filter_data)
@@ -535,7 +535,7 @@ def update_all_widgets_from_filters(filter_data):
 
         # Widget 2: Player Style Profile
         style_widget = WidgetRegistry.get_instance("player-style-profile")
-        from components.widgets.player_roles import PlayerStyleProfileWidget
+        from src.components.widgets.player_roles import PlayerStyleProfileWidget
 
         if style_widget and isinstance(style_widget, PlayerStyleProfileWidget):
             update_result = style_widget.update_from_filters(filter_data)
@@ -582,7 +582,7 @@ def update_all_widgets_from_filters(filter_data):
 
         # Widget 3: Player Attributes (RADAR)
         attributes_widget = WidgetRegistry.get_instance("player-attributes")
-        from components.widgets.player_card import PlayerAttributesWidget
+        from src.components.widgets.player_card import PlayerAttributesWidget
 
         if attributes_widget and isinstance(attributes_widget, PlayerAttributesWidget):
             update_result = attributes_widget.update_from_filters(filter_data)
@@ -730,7 +730,7 @@ def update_all_widgets_from_filters(filter_data):
 
         # Widget 5: Heatmap
         attributes_heatmap_widget = WidgetRegistry.get_instance("player-tracking")
-        from components.widgets.tracking_widget import TrackingWidget
+        from src.components.widgets.tracking_widget import TrackingWidget
 
         if attributes_heatmap_widget and isinstance(
             attributes_heatmap_widget, TrackingWidget
@@ -775,7 +775,6 @@ def update_all_widgets_from_filters(filter_data):
         logger.error(f"[GlobalFilters] Error updating widgets: {e}", exc_info=True)
         return [dash.no_update] * 4
 
-
 @app.callback(
     Output("widget-focus-modal", "is_open"),
     Output("widget-focus-title", "children"),
@@ -809,34 +808,26 @@ def show_widget_focus(focus_data, widget_store, is_open):
     try:
         # Get widget instance from registry
         widget = WidgetRegistry.get_instance(wid)
-
+        
         if not widget:
             logger.warning(f"[show_widget_focus] Widget not found in registry: {wid}")
             return _create_fallback_preview(wid, widget_store, is_open)
 
         # Skip filter widgets
-        if hasattr(widget, "config") and hasattr(widget.config, "widget_type"):
-            if widget.config.widget_type in [
-                "filter",
-                "filter_panel",
-                "compact_filter",
-            ]:
+        if hasattr(widget, 'config') and hasattr(widget.config, 'widget_type'):
+            if widget.config.widget_type in ["filter", "filter_panel", "compact_filter"]:
                 logger.info(f"[show_widget_focus] Skipping filter widget: {wid}")
                 return is_open, dash.no_update, dash.no_update
 
         # Get widget title
-        title = (
-            getattr(widget.config, "title", f"Widget: {wid}")
-            if hasattr(widget, "config")
-            else f"Widget: {wid}"
-        )
-
+        title = getattr(widget.config, 'title', f"Widget: {wid}") if hasattr(widget, 'config') else f"Widget: {wid}"
+        
         # ========== FIRST TRY HTML CONTENT ==========
         html_content = None
-
+        
         # 1. First try to retrieve complete HTML content
         if hasattr(widget, "get_current_content"):
-            content = widget.get_current_content()
+            content = widget.get_current_content() # type: ignore
             if content:
                 # If widget has pure HTML (without figure)
                 if "html" in content and "figure" not in content:
@@ -846,40 +837,36 @@ def show_widget_focus(focus_data, widget_store, is_open):
                 elif "strengths_html" in content or "scores_html" in content:
                     logger.info(f"[show_widget_focus] Found combined content for {wid}")
                     return _create_combined_modal(content, title, wid)
-
+        
         # 2. Then try specific HTML methods
         if hasattr(widget, "get_current_html"):
-            html_content = widget.get_current_html()
+            html_content = widget.get_current_html() # type: ignore
             if html_content:
-                logger.info(
-                    f"[show_widget_focus] Found HTML via get_current_html for {wid}"
-                )
+                logger.info(f"[show_widget_focus] Found HTML via get_current_html for {wid}")
                 return _create_html_modal(html_content, title, wid)
-
+        
         # ========== THEN TRY FIGURE ==========
         figure = None
-
+        
         # 3. Try to retrieve cached figure
         if hasattr(widget, "get_current_figure"):
-            figure = widget.get_current_figure()
+            figure = widget.get_current_figure() # type: ignore
             if figure:
                 logger.info(f"[show_widget_focus] Retrieved cached figure for {wid}")
                 return _create_figure_modal(figure, title, wid)
-
+        
         # 4. Fallback: try to retrieve via other methods
-        if figure is None and hasattr(widget, "viz_instance") and widget.viz_instance:
-            if hasattr(widget.viz_instance, "get_figure"):
-                figure = widget.viz_instance.get_figure()
-            elif hasattr(widget.viz_instance, "create_figure"):
+        if figure is None and hasattr(widget, 'viz_instance') and widget.viz_instance: # type: ignore
+            if hasattr(widget.viz_instance, "get_figure"): # type: ignore
+                figure = widget.viz_instance.get_figure() # type: ignore
+            elif hasattr(widget.viz_instance, "create_figure"): # type: ignore
                 # Only calculate if absolutely necessary
-                logger.warning(
-                    f"[show_widget_focus] Calculating figure for {wid} (no cache)"
-                )
-                figure = widget.viz_instance.create_figure()
-
+                logger.warning(f"[show_widget_focus] Calculating figure for {wid} (no cache)")
+                figure = widget.viz_instance.create_figure() # type: ignore
+        
         if figure is not None:
             return _create_figure_modal(figure, title, wid)
-
+        
         # ========== LAST RESORT: FULL RENDER ==========
         # 5. If nothing worked, try full render
         if hasattr(widget, "render"):
@@ -889,14 +876,12 @@ def show_widget_focus(focus_data, widget_store, is_open):
                 return _create_html_modal(rendered, title, wid)
             except Exception as e:
                 logger.warning(f"[show_widget_focus] Render failed for {wid}: {e}")
-
+        
         # Final fallback
         return _create_fallback_preview(wid, widget_store, is_open)
 
     except Exception as e:
-        logger.error(
-            f"[show_widget_focus] Error processing widget {wid}: {e}", exc_info=True
-        )
+        logger.error(f"[show_widget_focus] Error processing widget {wid}: {e}", exc_info=True)
         return _create_error_preview(wid, str(e), is_open)
 
 
@@ -911,15 +896,15 @@ def _create_html_modal(html_content, title, wid):
                     "backgroundColor": "var(--panel)",
                     "borderRadius": "12px",
                     "height": "100%",
-                },
+                }
             )
         ],
         className="modal-html-container",
     )
-
+    
     # Determine the icon
     icon = _get_widget_icon(wid, title)
-
+    
     logger.info(f"[show_widget_focus] Created HTML modal for '{title}'")
     return True, f"{icon} {title}", modal_body
 
@@ -927,7 +912,7 @@ def _create_html_modal(html_content, title, wid):
 def _create_combined_modal(content, title, wid):
     """Create a modal for widgets that combine figure and HTML."""
     components = []
-
+    
     # Add figure if available
     if "figure" in content and content["figure"]:
         fig = content["figure"]
@@ -936,7 +921,7 @@ def _create_combined_modal(content, title, wid):
             height=400,
             margin=dict(l=20, r=20, t=50, b=20),
         )
-
+        
         components.append(
             html.Div(
                 dcc.Graph(
@@ -947,19 +932,19 @@ def _create_combined_modal(content, title, wid):
                         "displaylogo": False,
                         "responsive": True,
                     },
-                    style={"height": "45vh"},
+                    style={"height": "45vh"}
                 ),
-                style={"marginBottom": "20px"},
+                style={"marginBottom": "20px"}
             )
         )
-
+    
     # Add HTML if available
     html_content = None
     if "strengths_html" in content:
         html_content = content["strengths_html"]
     elif "scores_html" in content:
         html_content = content["scores_html"]
-
+    
     if html_content:
         components.append(
             html.Div(
@@ -969,15 +954,15 @@ def _create_combined_modal(content, title, wid):
                     "backgroundColor": "var(--panel-secondary)",
                     "borderRadius": "8px",
                     "maxHeight": "25vh",
-                },
+                }
             )
         )
-
+    
     modal_body = html.Div(
         components,
         className="modal-combined-container",
     )
-
+    
     icon = _get_widget_icon(wid, title)
     logger.info(f"[show_widget_focus] Created combined modal for '{title}'")
     return True, f"{icon} {title}", modal_body
@@ -989,7 +974,11 @@ def _create_figure_modal(figure, title, wid):
         autosize=True,
         height=600,
         margin=dict(l=50, r=50, t=80, b=50),
-        title=dict(text=title, x=0.5, font=dict(size=18, color="white")),
+        title=dict(
+            text=title,
+            x=0.5,
+            font=dict(size=18, color="white")
+        )
     )
 
     modal_body = html.Div(
@@ -1007,8 +996,8 @@ def _create_figure_modal(figure, title, wid):
                         "filename": f"{title.lower().replace(' ', '_')}_focus",
                         "height": 800,
                         "width": 1200,
-                        "scale": 2,
-                    },
+                        "scale": 2
+                    }
                 },
             )
         ],
@@ -1024,7 +1013,7 @@ def _get_widget_icon(wid, title):
     """Determine icon based on widget ID and title."""
     widget_lower = wid.lower()
     title_lower = title.lower()
-
+    
     if "tracking" in widget_lower or "tracking" in title_lower:
         return "📍"
     elif "attribute" in widget_lower or "attribute" in title_lower:
@@ -1042,7 +1031,6 @@ def _get_widget_icon(wid, title):
     else:
         return "📊"
 
-
 def _handle_filter_widget_focus(wid, is_open):
     """Handle focus modal for filter widgets."""
     logger.info(f"[show_widget_focus] Filter widget detected: {wid}")
@@ -1053,20 +1041,16 @@ def _handle_filter_widget_focus(wid, is_open):
     try:
         # Import the specific page instance
         if page_prefix == "teams":
-            from pages.teams.page import teams_page_instance
-
+            from src.pages.teams.page import teams_page_instance
             filter_widget = teams_page_instance.widgets.get(wid)
         elif page_prefix == "players":
-            from pages.players.page import players_page_instance
-
+            from src.pages.players.page import players_page_instance
             filter_widget = players_page_instance.widgets.get(wid)
         elif page_prefix == "tracking":
-            from pages.advanced.page import advanced_page_instance
-
+            from src.pages.advanced.page import advanced_page_instance
             filter_widget = advanced_page_instance.widgets.get(wid)
         elif page_prefix == "player_focus":
-            from pages.player_focus.page import player_focus_page_instance
-
+            from src.pages.player_focus.page import player_focus_page_instance
             filter_widget = player_focus_page_instance.widgets.get(wid)
         # TODO: Add other pages
         else:
@@ -1092,7 +1076,7 @@ def _handle_filter_widget_focus(wid, is_open):
 
 def _handle_chart_widget_focus(widget, wid):
     """Handle focus modal for chart widgets."""
-    title = getattr(widget.config, "title", f"Widget: {wid}")
+    title = getattr(widget.config, 'title', f"Widget: {wid}")
     logger.info(f"[show_widget_focus] Processing chart widget: {title}")
 
     # Try to get cached figure first
@@ -1135,8 +1119,8 @@ def _handle_chart_widget_focus(widget, wid):
                             "filename": f"{title.lower().replace(' ', '_')}_focus",
                             "height": 800,
                             "width": 1200,
-                            "scale": 2,
-                        },
+                            "scale": 2
+                        }
                     },
                 )
             ],
@@ -1145,9 +1129,8 @@ def _handle_chart_widget_focus(widget, wid):
 
         logger.info(f"[show_widget_focus] Successfully loaded figure for '{title}'")
         return True, f"🔍 {title}", modal_body
-
+    
     return _create_widget_error(title, "Could not load chart data")
-
 
 def _create_widget_error(title, message):
     """Create error preview for widget."""
@@ -1170,16 +1153,14 @@ def _create_widget_type_fallback(widget, wid, widget_store):
     meta = widget_store.get(wid, {}) if widget_store else {}
     title = meta.get("title", f"Widget: {wid}")
     widget_type = meta.get("type", "unknown")
-
+    
     # Try to get any available data from widget
     widget_info = []
-    if hasattr(widget, "config"):
+    if hasattr(widget, 'config'):
         widget_info.append(f"Type: {getattr(widget.config, 'widget_type', 'unknown')}")
         widget_info.append(f"Title: {getattr(widget.config, 'title', 'Unknown')}")
-        widget_info.append(
-            f"Data Source: {getattr(widget.config, 'data_source', 'N/A')}"
-        )
-
+        widget_info.append(f"Data Source: {getattr(widget.config, 'data_source', 'N/A')}")
+    
     content = html.Div(
         [
             html.H4(title, style={"color": "var(--accent)"}),
@@ -1256,7 +1237,6 @@ def _create_error_preview(wid, error_msg, is_open):
         style={"padding": "30px", "textAlign": "center"},
     )
     return True, "⚠️ Error", content
-
 
 @app.callback(
     Output("widget-store", "data"),

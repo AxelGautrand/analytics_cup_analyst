@@ -46,7 +46,7 @@ class OffBallRunsVisualization(BaseVisualization):
         logger.info("📊 [OffBallRunsViz] Data Preparation...")
 
         try:
-            from core.data_manager import data_manager
+            from src.core.data_manager import data_manager
 
             # Use explicit context name
             config_name = self.aggregation_context or "off_ball_runs"

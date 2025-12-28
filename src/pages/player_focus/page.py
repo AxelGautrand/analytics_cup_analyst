@@ -3,7 +3,7 @@ Player Focus page using configuration-driven system.
 """
 import logging
 
-from pages.base import PageBase
+from src.pages.base import PageBase
 
 # Get module logger
 logger = logging.getLogger(__name__)

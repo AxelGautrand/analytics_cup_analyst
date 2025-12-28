@@ -114,7 +114,7 @@ class DataManager:
         """Get the aggregator manager instance."""
         if self._aggregator_manager is None:
             logger.info("🧮 [DataManager] Creating AggregatorManager...")
-            from core.aggregators.aggregator_manager import aggregator_manager
+            from src.core.aggregators.aggregator_manager import aggregator_manager
 
             self._aggregator_manager = aggregator_manager
 

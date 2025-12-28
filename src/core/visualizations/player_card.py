@@ -507,7 +507,7 @@ class PlayerAttributesVisualization(BaseVisualization):
             return
 
         try:
-            from core.data_manager import data_manager
+            from src.core.data_manager import data_manager
 
             # Get aggregated data for all players
             config_name = self.aggregation_context or "player_attributes"

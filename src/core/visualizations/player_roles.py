@@ -721,7 +721,7 @@ class PlayerStyleProfileVisualization(BaseVisualization):
             "📊 [PlayerStyleProfileViz] Preparing data with improved role distribution"
         )
         try:
-            from core.data_manager import data_manager
+            from src.core.data_manager import data_manager
 
             # Get aggregated data
             config_name = self.aggregation_context or "player_style_profile"

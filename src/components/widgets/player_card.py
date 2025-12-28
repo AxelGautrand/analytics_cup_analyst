@@ -7,8 +7,8 @@ from typing import Any, Dict, List, Optional
 import plotly.graph_objects as go
 from dash import dcc, html
 
-from components.widgets.base import BaseWidget, WidgetConfig
-from core.visualizations.factory import VisualizationFactory
+from src.components.widgets.base import BaseWidget, WidgetConfig
+from src.core.visualizations.factory import VisualizationFactory
 
 logger = logging.getLogger(__name__)
 

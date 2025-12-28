@@ -6,7 +6,7 @@ from typing import Any, Dict, List, Optional
 
 from dash import dcc, html
 
-from core.visualizations.factory import VisualizationFactory
+from src.core.visualizations.factory import VisualizationFactory
 
 from .base import BaseWidget, WidgetConfig
 
