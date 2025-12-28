@@ -713,7 +713,7 @@ class PlayerAttributesVisualization(BaseVisualization):
 
                     # Prepare hover text
                     hover_text = (
-                        f"<span style='color:{category_info['color']};font-weight:bold'>"
+                        f"<span style='color:{category_info['color']};'>"
                         f"{category_info['label']}</span><br>"
                         f"Score: {avg_data['rounded']}/20<br><br>"
                         f"<b>Attributes:</b><br>"
@@ -924,7 +924,7 @@ class PlayerAttributesVisualization(BaseVisualization):
                             fill_color="rgba(20, 25, 30, 0.95)",
                             align=["left", "center", "center", "center"],
                             font=dict(
-                                color="white", size=12, family="Arial", weight="bold"
+                                color="white", size=12, family="Arial",
                             ),
                             line=dict(color=COMPARISON_COLORS["border"], width=1.5),
                         ),
