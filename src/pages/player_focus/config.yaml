@@ -1,0 +1,128 @@
+page:
+  id: "player_focus"
+  title: "Player Focus"
+  prefix: "player_focus"
+
+widgets:
+
+  # Filters
+  - id: "filters"
+    type: "compact_filter"
+    title: ""
+    position:
+      x: 10
+      y: 0
+      w: 2
+      h: 1
+    filter_types: ["match", "team", "time_range"]
+    compact_filters: ["player"]
+    show_gear_icon: true
+    gear_icon: "✚"
+    filter_options:
+      player:
+        allow_all: false  # Player Focus requires a specific player
+        multi: false      # Single selection only
+        placeholder: "Select a player..."
+        clearable: false  # Cannot clear selection
+        value: "38673"
+
+  # Player Info Widget
+  - id: "player-info"
+    type: "player_info"
+    title: "Informations Joueur"
+    position:
+      x: 0
+      y: 0
+      w: 2
+      h: 3
+    show_photo_placeholder: true
+    filters: ["player"]  # This tells the system this widget depends on player filter
+    default_player_id: "38673"  # Guillermo Luis May Bartesaghi
+
+  - id: "player-style-profile"
+    type: "player_style_profile"
+    title: "Player Style Profile"
+    visualization: "player_style_profile"
+    position:
+      x: 2
+      y: 0
+      w: 2
+      h: 3
+    filters: ["player"]
+    aggregation_context: "player_style_base"
+    default_player_label: "G. May"  # Guillermo Luis May Bartesaghi
+
+  - id: "player-table"
+    type: "player_attributes"
+    title: "Player Attributes"
+    visualization: "player_attributes"
+    position:
+      x: 0
+      y: 3
+      w: 4
+      h: 2
+    filters: ["player"]
+    aggregation_context: "player_attributes"
+    default_player_label: "G. May"
+    options:
+      visualization_type: "table"
+
+  - id: "player-attributes"
+    type: "player_attributes"
+    title: "Player Attributes"
+    visualization: "player_attributes"
+    position:
+      x: 0
+      y: 5
+      w: 4
+      h: 3
+    filters: ["player"]
+    aggregation_context: "player_attributes"
+    default_player_label: "G. May"
+    options:
+      visualization_type: "radar"
+
+  - id: "player-tracking"
+    title: "Player Tracking Analysis"
+    type: "player_tracking"
+    visualization: "tracking"
+    position: {
+      "x": 4,
+      "y": 0,
+      "w": 4,
+      "h": 8
+    }
+    filters: ["player"]
+    default_player_label: "G. May"  # Guillermo Luis May Bartesaghi
+
+  # Player Efficiency (Scatter Plot)
+  - id: "player-efficiency"
+    type: "chart"
+    title: "Player Efficiency"
+    visualization: "off_ball_runs"
+    data_source: "dynamic_events"
+    position:
+      x: 8
+      y: 1
+      w: 4
+      h: 4
+    options:
+      visualization_type: "scatter"
+      aggregation_context: "off_ball_runs_fast"
+    filters: ["team", "time_range"]
+
+  # Player Efficiency (Scatter Plot)
+  - id: "player-efficiency2"
+    type: "chart"
+    title: "Player Efficiency"
+    visualization: "off_ball_runs"
+    data_source: "dynamic_events"
+    position:
+      x: 8
+      y: 5
+      w: 4
+      h: 3
+    options:
+      visualization_type: "scatter"
+      aggregation_context: "off_ball_runs_fast"
+    filters: ["team", "time_range"]

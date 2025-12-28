@@ -1,0 +1,2036 @@
+
+/*
+ * Reusable UI Components
+ * Buttons, tiles, cards, and other interface elements.
+ */
+
+/* ===== TILE COMPONENT ===== */
+.tile {
+  margin: 4px;
+  padding: 12px 16px;
+  box-sizing: border-box;
+  border-radius: var(--card-radius);
+  border: 2px solid var(--c1);
+  box-shadow: var(--shadow-tile);
+  transition: all var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  /* Ensure tile doesn't overflow its container */
+  overflow: visible;
+  position: relative;
+  z-index: 1;
+  /* Prepare for hover effect */
+  transform: translateZ(0); /* Hardware acceleration */
+}
+
+.tile:hover {
+  border-color: var(--accent) !important;
+  /* Enhanced shadow for 3D lift effect */
+  box-shadow:
+    0 22px 45px rgba(0, 0, 0, 0.85),
+    0 0 0 1px var(--accent),
+    0 0 0 8px rgba(72, 156, 203, 0.18) !important;
+  /* Slight lift effect */
+  transform: translateY(-4px) translateZ(0) !important;
+  /* Bring tile to front on hover */
+  z-index: 10;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: linear-gradient(135deg,
+      rgba(72, 156, 203, 0.11) 0%,
+      rgba(74, 255, 124, 0.11) 100%);
+}
+
+/* Tile within Grid Stack */
+.grid-stack .grid-stack-item > .tile,
+.page-grid-stack .grid-stack-item > .tile {
+  height: calc(100% - 9px);
+  margin: 4px;
+  padding: 6px 8px;
+  box-sizing: border-box;
+  border-radius: var(--card-radius);
+  border: 2px solid var(--c1);
+  box-shadow: var(--shadow-tile);
+  transition: all var(--transition-normal);
+  z-index: 1;
+}
+
+.grid-stack .grid-stack-item :not(#filters) > .tile:hover,
+.page-grid-stack .grid-stack-item :not(#filters) > .tile:hover {
+  border-color: var(--accent);
+  /* Enhanced shadow for 3D lift effect */
+  box-shadow:
+    0 22px 45px rgba(0, 0, 0, 0.85),
+    0 0 0 1px var(--accent),
+    0 0 0 8px rgba(72, 156, 203, 0.18);
+  /* Slight lift effect */
+  transform: translateY(-4px) scale(1.02) translateZ(0);
+  /* Bring tile to front on hover */
+  z-index: 10;
+}
+
+/* Alternative: Glow effect option */
+.tile.glow-on-hover:hover,
+.grid-stack .grid-stack-item > .tile.glow-on-hover:hover,
+.page-grid-stack .grid-stack-item > .tile.glow-on-hover:hover {
+  border-color: var(--accent-2);
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.7),
+    0 0 30px rgba(74, 255, 124, 0.3);
+  transform: translateY(-3px) translateZ(0);
+}
+
+/* Tile Header */
+.tile-header {
+  display: block;
+  padding-bottom: 3px;
+  font-weight: 700;
+  font-size: 21px;
+  position: relative;
+  z-index: var(--z-tile-header);
+}
+
+/* Tile Body */
+.tile-body {
+  height: calc(100% - 44px);
+  overflow: auto;
+  min-height: 420px;
+  max-height: 60vh;
+  /* Ensure body doesn't cause overflow */
+  box-sizing: border-box;
+}
+
+.tile-label {
+  font-size: 13px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.tile.filter-tile .tile-label {
+  padding-right: 8px;
+}
+
+/* Tile Delete Button */
+.tile-delete {
+  position: absolute;
+  top: 2px;
+  right: 0px;
+  width: 26px;
+  height: 26px;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0);
+  border: 1px solid rgba(255, 255, 255, 0.0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  font-size: 8px;
+}
+
+.grid-stack .grid-stack-item:hover .tile-delete,
+.page-grid-stack .grid-stack-item:hover .tile-delete {
+  opacity: 1;
+}
+
+/* Prevent hover on grid gaps */
+.grid-stack-item::before,
+.page-grid-stack .grid-stack-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ===== BUTTON COMPONENTS ===== */
+.control-btn {
+  background: var(--button-gradient);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background var(--transition-fast),
+              transform var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-button);
+}
+
+.icon-btn {
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.open-filter-btn {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 18px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.open-filter-btn {
+  width: 48px;
+  height: 48px;
+}
+
+/* Primary Button (used in modals) */
+.modal-footer .btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.modal-footer .btn-primary:hover {
+  background: var(--accent-2);
+  border-color: var(--accent-2);
+}
+
+/* ===== FORM COMPONENTS ===== */
+.compact-select {
+  min-width: 200px;
+}
+
+.tile.filter-tile .compact-select {
+  min-width: 90px;
+  max-width: 120px;
+  font-size: 13px;
+}
+
+.search-bar {
+  width: 0;
+  opacity: 0;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text);
+  font-size: 14px;
+  transition: width var(--transition-slow),
+              opacity var(--transition-slow),
+              margin-left var(--transition-slow);
+  margin-left: 0;
+}
+
+.search-wrapper:hover .search-bar,
+.search-wrapper:focus-within .search-bar {
+  width: 200px;
+  opacity: 1;
+  margin-left: 8px;
+}
+
+/* ===== ADD HELPER COMPONENT ===== */
+#grid-add-helper {
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(74, 255, 124, 0.10);
+  color: var(--accent-2);
+  font-size: 16px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--transition-fast),
+              transform var(--transition-fast);
+  z-index: 100; /* Increased z-index to be above tiles */
+  pointer-events: auto; /* Ensure it's clickable */
+}
+
+#grid-add-helper:not(.hidden) {
+  opacity: 1;
+  transform: scale(1);
+}
+
+#grid-add-helper:hover {
+  opacity: 1;
+  transform: scale(1.07);
+}
+
+#grid-add-helper.hidden {
+  opacity: 0;
+  transform: scale(0.8);
+  pointer-events: none;
+}
+
+/* ===== MODAL COMPONENTS ===== */
+.modal-content {
+  background-color: var(--bg-mid) !important;
+  border: 1px solid var(--accent);
+  box-shadow: var(--shadow-modal);
+  color: var(--text);
+}
+
+.modal-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--bg-dark);
+}
+
+.modal-title {
+  font-weight: 600;
+}
+
+.modal-body {
+  background: var(--bg-mid);
+  padding: 24px;
+}
+
+.modal-footer {
+  background: var(--bg-dark);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.modal-body .form-control,
+.modal-body .form-select {
+  background: var(--panel);
+  border: 1px solid var(--tile-border);
+  color: var(--text);
+}
+
+.modal-body .form-control::placeholder {
+  color: var(--text);
+}
+
+.modal-body .form-control:focus,
+.modal-body .form-select:focus {
+  border-color: var(--accent-2);
+  box-shadow: 0 0 0 2px rgba(72, 156, 203, 0.25);
+}
+
+.modal-body .form-select option {
+  background: var(--bg-mid);
+  color: var(--text);
+}
+
+.input-group-text {
+  background: transparent;
+  border: 0px solid var(--tile-border);
+  color: var(--c1);
+}
+
+.btn-close {
+  filter: invert(1) brightness(1.2);
+}
+
+/* ===== FILTER CARD COMPONENTS ===== */
+.filter-primary .label-sr {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.more-filters-summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.filter-row .label {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+/* Widget Focus Modal - Optimized for Plotly */
+.modal-xl {
+    max-width: 95vw !important;
+    width: 95vw !important;
+}
+
+.modal-xl .modal-dialog {
+    max-width: 1400px;
+    width: 90vw;
+    max-height: 90vh;
+    margin: 2vh auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-xl .modal-content {
+    height: 75vh;
+    max-height: 75vh;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-xl .modal-header {
+    background: var(--header-bg);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 1.5rem;
+    flex-shrink: 0;
+}
+
+.modal-xl .modal-title {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+.modal-xl .modal-body {
+    flex: 1;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+    background: var(--background);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Plotly graph container - fills modal body */
+.modal-plotly-container {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: transparent;
+}
+
+/* Plotly graph styling */
+.modal-xl .dash-graph,
+.modal-xl .js-plotly-plot,
+.modal-xl .plot-container.plotly {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+}
+
+/* ============================================
+   FILTER COMPONENTS - Optimized Version
+   ============================================ */
+
+/* Main filter container - Flex layout with proper spacing */
+#filters {
+  display: flex;
+  align-items: center;
+  overflow: visible;
+  z-index: 100;
+  isolation: isolate;
+  padding: 8px 12px;
+  background: transparent;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+/* Filter item container - Flexible growth with proper distribution */
+.compact-filter-item {
+  display: flex;
+  align-items: center;
+  flex: 1; /* Takes available space */
+  min-width: 0;
+  position: relative;
+  z-index: 101;
+  height: 100%;
+}
+
+/* Dropdown container - Fixed width distribution */
+.Select.compact-filter-dropdown {
+  flex: 0 0 75%; /* 75% of available space */
+  font-size: 12px;
+  position: relative;
+  z-index: 102;
+  min-width: 140px;
+  max-width: none; /* Allow flexible width */
+}
+
+/* Main dropdown control */
+.Select.compact-filter-dropdown .Select-control {
+  background: transparent;
+  border: 1px solid var(--tile-border);
+  border-radius: 8px;
+  box-shadow: none;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  overflow: visible;
+  height: 36px;
+  max-height: 36px;
+  display: flex;
+  align-items: center;
+}
+
+/* Hover states for dropdown */
+.Select.compact-filter-dropdown .Select-control:hover {
+  border-color: var(--accent);
+  background: rgba(72, 156, 203, 0.05);
+}
+
+.Select.compact-filter-dropdown .Select.is-focused .Select-control,
+.Select.compact-filter-dropdown .Select.is-open .Select-control {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(72, 156, 203, 0.25);
+  background: rgba(72, 156, 203, 0.08);
+}
+
+/* Selected values wrapper - Horizontal scroll */
+.Select.compact-filter-dropdown .Select-multi-value-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 4px;
+  padding: 0 8px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  white-space: nowrap;
+  height: 100%;
+  flex: 1; /* Takes remaining space after arrow */
+  min-width: 0; /* Allow shrinking */
+  position: relative;
+
+  /* Scrollbar hidden by default, visible on hover */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+/* Selected tags styling */
+.Select.compact-filter-dropdown .Select-value {
+  background: rgba(72, 156, 203, 0.15);
+  border: 1px solid rgba(72, 156, 203, 0.3);
+  border-radius: 6px;
+  color: var(--accent);
+  font-size: 11px;
+  padding: 2px 6px;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
+  line-height: 1.4;
+  opacity: 0.8;
+  transition: all var(--transition-fast);
+}
+
+.Select.compact-filter-dropdown .Select-value:hover {
+  opacity: 1;
+  background: rgba(72, 156, 203, 0.25);
+}
+
+/* Selected value label */
+.Select.compact-filter-dropdown .Select-value-label {
+  font-weight: 500;
+  padding-right: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Close icon for removing selected items */
+.Select.compact-filter-dropdown .Select-value-icon {
+  color: var(--accent);
+  opacity: 0.5;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0 2px;
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.Select.compact-filter-dropdown .Select-value-icon:hover {
+  opacity: 1;
+  color: var(--c1);
+}
+
+/* Counter badge for multi-select */
+.Select.compact-filter-dropdown .Select--multi .Select-multi-value-wrapper::after {
+  content: attr(data-selected-count);
+  background: rgba(72, 156, 203, 0.2);
+  border: 1px solid rgba(72, 156, 203, 0.4);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: 8px;
+  flex-shrink: 0;
+  display: inline-block;
+  min-width: 24px;
+  text-align: center;
+}
+
+/* Dropdown input field */
+.Select.compact-filter-dropdown .Select-input {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  flex: 1;
+  min-width: 20px;
+}
+
+.Select.compact-filter-dropdown .Select-input input {
+  color: var(--text);
+  font-size: 12px;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.Select.compact-filter-dropdown .Select-input input::placeholder {
+  color: var(--muted);
+}
+
+.Select.compact-filter-dropdown .Select-placeholder,
+.Select.compact-filter-dropdown .Select-value-label {
+  color: var(--text) !important;
+  font-size: 12px;
+}
+
+/* Dropdown arrow - Fixed width and proper alignment */
+.Select.compact-filter-dropdown .Select-arrow-zone {
+  flex: 0 0 10%; /* 10% of dropdown width */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  height: 100%;
+}
+
+.Select.compact-filter-dropdown .Select-arrow {
+  border-color: var(--text) transparent transparent;
+  border-width: 5px 4px 0;
+  opacity: 0.7;
+  transition: transform var(--transition-fast);
+  vertical-align: middle; /* Better vertical alignment */
+}
+
+.Select.compact-filter-dropdown .Select.is-open .Select-arrow {
+  transform: rotate(180deg);
+  border-top-color: var(--accent);
+}
+
+/* ===== DROPDOWN MENU ===== */
+.Select.compact-filter-dropdown .Select-menu-outer {
+  z-index: 9999;
+  position: absolute;
+  background: var(--bg-dark);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.9),
+    0 0 0 1px var(--accent),
+    0 0 0 8px rgba(72, 156, 203, 0.1);
+  margin-top: 4px;
+  max-height: 280px;
+  overflow-y: auto;
+  width: 100%;
+  min-width: 200px;
+  backdrop-filter: blur(10px);
+  top: 100%;
+  left: 0;
+  animation: dropdownOpen var(--transition-normal) ease-out;
+
+  /* Scrollbar hidden by default */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+/* Dropdown animation */
+@keyframes dropdownOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dropdown options - Fixed background issue */
+.Select.compact-filter-dropdown .Select-option {
+  color: var(--text);
+  padding: 8px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative; /* Ensure background doesn't overflow */
+  z-index: 1;
+}
+
+.Select.compact-filter-dropdown .Select-option:last-child {
+  border-bottom: none;
+}
+
+/* Fix: Background only on the text area, not full width with scroll */
+.Select.compact-filter-dropdown .Select-option.is-focused,
+.Select.compact-filter-dropdown .Select-option.is-selected,
+.Select.compact-filter-dropdown .Select-option.is-selected.is-focused {
+  background: rgba(72, 156, 203, 0.15);
+  color: var(--accent);
+}
+
+.Select.compact-filter-dropdown .Select-option.is-selected {
+  font-weight: 500;
+  background: rgba(72, 156, 203, 0.25);
+}
+
+.Select.compact-filter-dropdown .Select-option.is-selected.is-focused {
+  background: rgba(72, 156, 203, 0.3);
+}
+
+/* Empty menu state */
+.Select.compact-filter-dropdown .Select-noresults {
+  color: var(--muted);
+  padding: 12px;
+  text-align: center;
+  font-size: 11px;
+}
+
+/* ===== PLUS BUTTON (+) ===== */
+#filters-gear-btn.filters-gear-btn {
+  flex: 0 0 10%; /* 15% of container width */
+  background: rgba(72, 156, 203, 0.15);
+  border: 2px solid rgba(72, 156, 203, 0.3);
+  border-radius: 50%;
+  color: var(--accent);
+  font-size: 16px;
+  width: 40px;
+  height: 40px;
+  min-width: 40px; /* Fixed minimum size */
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 103;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Plus button hover effects */
+#filters-gear-btn.filters-gear-btn:hover {
+  background: rgba(72, 156, 203, 0.25);
+  border-color: var(--accent);
+  color: var(--c1);
+  transform: scale(1.05) rotate(90deg);
+  box-shadow:
+    0 4px 16px rgba(72, 156, 203, 0.3),
+    0 0 0 4px rgba(72, 156, 203, 0.1);
+}
+
+#filters-gear-btn.filters-gear-btn:active {
+  transform: scale(0.95) rotate(90deg);
+}
+
+/* Glow effect on hover */
+#filters-gear-btn.filters-gear-btn::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center,
+    rgba(72, 156, 203, 0.1) 0%,
+    transparent 70%);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+  z-index: -1;
+}
+
+#filters-gear-btn.filters-gear-btn:hover::before {
+  opacity: 1;
+}
+
+/* ===== STYLED SCROLLBARS (visible on hover only) ===== */
+
+/* Horizontal scrollbar for selected values */
+.Select.compact-filter-dropdown .Select-multi-value-wrapper:hover::-webkit-scrollbar {
+  height: 6px;
+}
+
+.Select.compact-filter-dropdown .Select-multi-value-wrapper:hover::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+  margin: 2px 4px;
+}
+
+.Select.compact-filter-dropdown .Select-multi-value-wrapper:hover::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg,
+    rgba(72, 156, 203, 0.7) 0%,
+    rgba(74, 255, 124, 0.7) 100%);
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.Select.compact-filter-dropdown .Select-multi-value-wrapper:hover::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg,
+    rgba(72, 156, 203, 0.9) 0%,
+    rgba(74, 255, 124, 0.9) 100%);
+}
+
+/* Vertical scrollbar for dropdown menu */
+.Select.compact-filter-dropdown .Select-menu-outer:hover::-webkit-scrollbar {
+  width: 8px;
+}
+
+.Select.compact-filter-dropdown .Select-menu-outer:hover::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+  margin: 4px 0;
+}
+
+.Select.compact-filter-dropdown .Select-menu-outer:hover::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg,
+    rgba(72, 156, 203, 0.8) 0%,
+    rgba(36, 104, 131, 0.8) 100%);
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.1),
+    0 0 8px rgba(72, 156, 203, 0.4);
+}
+
+.Select.compact-filter-dropdown .Select-menu-outer:hover::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg,
+    var(--accent) 0%,
+    var(--c5) 100%);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.2),
+    0 0 10px rgba(72, 156, 203, 0.6);
+}
+
+/* Firefox scrollbar support */
+.Select.compact-filter-dropdown .Select-multi-value-wrapper:hover {
+  overflow-x: auto;
+  scrollbar-color: rgba(72, 156, 203, 0.7) rgba(255, 255, 255, 0.05);
+}
+
+.Select.compact-filter-dropdown .Select-menu-outer:hover {
+  scrollbar-color: rgba(72, 156, 203, 0.8) rgba(255, 255, 255, 0.03);
+}
+
+/* ===== UTILITIES ===== */
+
+/* Hide placeholder when values exist */
+.Select.compact-filter-dropdown .Select.has-value .Select-placeholder {
+  display: none;
+}
+
+/* Loading state indicator */
+.Select.compact-filter-dropdown .Select.is-loading .Select-arrow-zone::after {
+  content: '';
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--tile-border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-left: 8px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Accessibility focus indicator */
+.Select.compact-filter-dropdown .Select-input input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Player info widget */
+
+.player-info-tile {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+    gap: 0;
+}
+
+/* Photo - 20% of height */
+.player-photo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    height: 20%;
+    min-height: 30px;
+    max-height: 60px;
+}
+
+.player-photo-placeholder {
+    width: auto; /* Adapt to container */
+    height: 80%; /* 80% of container's height */
+    aspect-ratio: 1/1; /* Perfect square */
+    border-radius: 50%;
+    background-color: var(--panel-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: min(1.5vw, 20px);
+    border: 1px solid var(--accent);
+    flex-shrink: 0;
+}
+
+/* Name - 20% of total height */
+.player-name {
+    font-size: clamp(11px, 1.5vh, 14px);
+    font-weight: 600;
+    color: var(--accent);
+    text-align: center;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 2px 4px;
+    width: 100%;
+    box-sizing: border-box;
+    height: 20%;
+    min-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+/* Infos - 80% of total height */
+.player-info-details {
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.player-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3px;
+    font-size: clamp(9px, 1.2vh, 12px);
+    overflow: auto;
+    flex: 1;
+    min-height: 0;
+    align-content: start;
+    width: 100%;
+    padding: 2px;
+    height: 100%;
+}
+
+.info-item {
+    padding: 4px 5px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 3px;
+    border-left: 1px solid var(--accent);
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    overflow: hidden;
+    height: min-content;
+}
+
+.info-label {
+    font-weight: 500;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.9em;
+    line-height: 1.1;
+}
+
+.info-value {
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.1;
+    font-size: 1em;
+}
+
+/* Scrollbar */
+.player-info-grid::-webkit-scrollbar {
+    width: 4px;
+}
+
+.player-info-grid::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 2px;
+}
+
+.player-info-grid::-webkit-scrollbar-thumb {
+    background: rgba(72, 156, 203, 0.5);
+    border-radius: 2px;
+}
+
+/* PLAYER STYLE PROFILE WIDGET */
+
+/* Main container */
+.player-style-profile-main-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+    flex: 1;
+}
+
+/* Chart area */
+.player-style-profile-chart-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: visible;
+    height: 70%; /* 70% of the tile */
+    position: relative;
+}
+
+/* SVG container */
+.player-style-profile-chart-area .user-select-none.svg-container {
+    height: 100% ;
+    width: 100% ;
+    min-height: 0 ;
+    min-width: 0 ;
+    position: relative ;
+    flex: 1 ;
+}
+
+/* Main SVG */
+.player-style-profile-chart-area .main-svg {
+    width: 100% ;
+    height: 100% ;
+    overflow: visible ;
+}
+
+/* ===== CENTER ANNOTATION - SMALLER ===== */
+.player-style-profile-chart-area .annotation-text {
+    font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif !important; /* TODO: Check it is accounted */
+    font-size: clamp(9px, 1.1vh, 12px) !important; /* Reduced size */
+    font-weight: 700 !important;
+    color: var(--accent) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+}
+
+.player-style-profile-chart-area .annotation-text .bg {
+    display: none ;
+}
+
+/* ===== HOVER EFFECTS ===== */
+
+/* Base state */
+.pielayer .slice {
+    transition: transform 0.3s ease ;
+    transform-origin: center ;
+}
+
+/* Hover effect - scale only, no translation */
+.pielayer .slice:hover {
+    transform: scale(1.08) ;
+    z-index: 100 ;
+}
+
+.pielayer .slice:hover path.surface {
+    filter:
+        brightness(1.2)
+        drop-shadow(0 4px 8px rgba(72, 156, 203, 0.4)) ;
+    stroke: rgba(255, 255, 255, 0.4) ; /* Lighter stroke on hover */
+    stroke-width: 3px ;
+}
+
+/* ===== CUSTOM TOOLTIP - MATCHING DESIGN ===== */
+
+.js-plotly-plot .hoverlayer .hovertext {
+    background: linear-gradient(135deg,
+        rgba(20, 25, 30, 0.98) 0%,
+        rgba(15, 20, 25, 0.98) 100%) ;
+    border: 1px solid var(--accent) ;
+    border-radius: 8px ;
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.8),
+        0 0 0 1px var(--accent),
+        0 0 0 6px rgba(72, 156, 203, 0.15) ;
+    backdrop-filter: blur(8px) ;
+    padding: 8px 10px ;
+    font-family: inherit ;
+}
+
+.js-plotly-plot .hoverlayer .hovertext path {
+    fill: var(--accent) ;
+}
+
+.js-plotly-plot .hoverlayer .hovertext .name {
+    color: var(--accent) ;
+    font-weight: 600 ;
+    font-size: 11px ;
+}
+
+.js-plotly-plot .hoverlayer .hovertext .nums {
+    color: rgba(255, 255, 255, 0.9) ;
+    font-size: 10px ;
+}
+
+/* ===== STRENGTHS SECTION - VISIBLE & RESPONSIVE ===== */
+
+/* Strengths container - 25% height */
+.player-style-profile-strengths-container {
+    height: 25% ;
+    background: linear-gradient(180deg,
+        rgba(20, 25, 30, 0.95) 0%,
+        rgba(15, 20, 25, 0.98) 100%) ;
+    border-top: 2px solid var(--accent) ;
+    border-radius: 0 0 var(--card-radius) var(--card-radius) ;
+    padding: 4px 6px ;
+    display: flex ;
+    flex-direction: column ;
+    justify-content: center ;
+    overflow: hidden ;
+    flex-shrink: 0 ;
+    box-sizing: border-box ;
+}
+
+/* Strengths list items in one line, FILLING SPACE */
+.player-style-profile-strengths-list {
+    display: flex ;
+    flex-wrap: nowrap ;
+    gap: 8px ;
+    width: 100% ;
+    height: 100% ;
+    align-items: center ;
+    overflow-x: auto ;
+    overflow-y: hidden ;
+    box-sizing: border-box ;
+    padding: 4px 6px ;
+    margin: 0 ;
+    scrollbar-width: none ; /* Hide scrollbar by default */
+}
+
+/* Strength item */
+.player-style-profile-strength-item {
+    display: flex ;
+    align-items: center ;
+    justify-content: space-between ;
+    gap: 8px ;
+    padding: 6px 10px ;
+    background: linear-gradient(135deg,
+        rgba(72, 156, 203, 0.15) 0%,
+        rgba(36, 104, 131, 0.2) 100%) ;
+    border-radius: 8px ;
+    border: 2px solid rgba(72, 156, 203, 0.4) ;
+    max-height: 60%;
+    height: 100% ; /* Fill container height */
+    overflow: hidden ;
+    transition: all 0.2s ease ;
+    box-sizing: border-box ;
+    text-align: left ;
+    flex-shrink: 0 ; /* Prevent items from shrinking */
+}
+
+/* Hover effect for strength items */
+.player-style-profile-strength-item:hover {
+    background: linear-gradient(135deg,
+        rgba(72, 156, 203, 0.25) 0%,
+        rgba(36, 104, 131, 0.3) 100%) ;
+    border-color: var(--accent) ;
+    box-shadow: 0 4px 12px rgba(72, 156, 203, 0.3) ;
+}
+
+/* Strength dot */
+.player-style-profile-strength-item > div:first-child {
+    border-radius: 50% ;
+    flex-shrink: 0 ;
+    width: 10px ;
+    height: 10px ;
+}
+
+/* Strength label */
+.player-style-profile-strength-label {
+    font-weight: 600 ;
+    color: rgba(255, 255, 255, 0.95) ;
+    flex: 1 ;
+    overflow: hidden ;
+    text-overflow: ellipsis ;
+    white-space: nowrap ;
+    min-width: 0 ;
+    text-align: left ;
+    font-size: clamp(10px, 1.2vh, 12px) ;
+}
+
+/* Strength value */
+.player-style-profile-strength-value {
+    font-weight: 700 ;
+    flex-shrink: 0 ;
+    text-align: right ;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) ;
+    font-size: clamp(10px, 1.2vh, 12px) ;
+}
+
+/* ============================================
+   PLAYER ATTRIBUTES WIDGET
+   ============================================ */
+
+/* Main container */
+.player-attributes-main-content {
+    height: 85%;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    min-height: 0;
+    overflow: visible;
+    flex: 1;
+    width: 100%;
+    align-items: stretch;
+}
+
+/* Chart area - FIXED Plotly rendering */
+.player-attributes-chart-area {
+    flex: 0 0 45%; /* Slightly more space for radar */
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+    position: relative;
+    border-radius: 10px;
+    background: linear-gradient(135deg,
+        rgba(20, 25, 30, 0.95) 0%,
+        rgba(15, 20, 25, 0.98) 100%);
+    border: 1px solid rgba(72, 156, 203, 0.25);
+    padding: 6px;
+}
+
+/* Force Plotly to fill container */
+.player-attributes-chart-area .dash-graph,
+.player-attributes-chart-area .js-plotly-plot,
+.player-attributes-chart-area .plot-container.plotly {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    flex: 1 !important;
+}
+
+.player-attributes-chart-area .user-select-none.svg-container {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    min-width: 0 !important;
+    position: relative !important;
+}
+
+.player-attributes-chart-area .main-svg {
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+}
+
+/* Scores area - 2 columns with spacing */
+.player-attributes-scores-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-height: 0;
+    overflow: visible;
+    padding: 2px;
+    position: relative;
+}
+
+/* Scores grid - 2 columns */
+.player-attributes-scores-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 6px;
+    height: 100%;
+    min-height: 0;
+    overflow: visible;
+    align-items: stretch;
+}
+
+/* Overall item - special styling, no border */
+.player-attributes-overall-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding:4 3px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    text-align: center;
+    gap: 4px;
+    border: 2px solid transparent; /* No visible border */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle background effect for overall */
+.player-attributes-overall-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+        rgba(72, 156, 203, 0.05) 0%,
+        rgba(74, 255, 124, 0.02) 100%);
+    border-radius: 8px;
+    z-index: 0;
+}
+
+.player-attributes-overall-item > * {
+    position: relative;
+    z-index: 1;
+}
+
+.player-attributes-overall-label {
+    font-size: clamp(6px, 1.2vh, 14px);
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+}
+
+.player-attributes-overall-container {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 3px;
+}
+
+.player-attributes-overall-value {
+    font-size: clamp(6px, 1.2vh, 36px);
+    font-weight: 800;
+    line-height: 1;
+    color: var(--accent);
+    text-shadow: 0 2px 10px rgba(72, 156, 203, 0.4);
+}
+
+.player-attributes-overall-max {
+    font-size: clamp(6px, 1.2vh, 14px);
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 500;
+}
+
+/* Regular score items */
+.player-attributes-score-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 3px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    border: 1px solid var(--category-border-color, rgba(72, 156, 203, 0.2));
+    transition: all 0.2s ease;
+    position: relative;
+    cursor: help;
+    text-align: center;
+    min-height: 0;
+    overflow: visible;
+}
+
+.player-attributes-score-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: scale(1.005);
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        0 0 0 1px var(--category-border-color, rgba(72, 156, 203, 0.3));
+    z-index: 10;
+}
+
+/* Category label */
+.player-attributes-category-label {
+    font-size: clamp(6px, 1.2vh, 14px);
+    font-weight: 600;
+    color: var(--category-color, var(--text));
+    margin-bottom: 6px;
+    text-align: center;
+    line-height: 1.2;
+    height: 2.4em; /* Fixed height for 2 lines */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+/* Score container */
+.player-attributes-score-container {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 2px;
+    margin-bottom: 6px;
+}
+
+.player-attributes-score-value {
+    font-size: clamp(6px, 1.2vh, 36px);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--score-color, var(--text));
+}
+
+.player-attributes-score-max {
+    font-size: clamp(6px, 1.2vh, 14px);
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+}
+
+/* Score bar - original style */
+.player-attributes-score-bar {
+    width: 85%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 2px;
+}
+
+.player-attributes-score-bar > div {
+    height: 100%;
+    transition: width 0.5s ease-out;
+    border-radius: 2px;
+}
+
+/* Hover tooltip */
+.player-attributes-hover-tooltip {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(0);
+    width: 220px;
+    max-width: 90vw;
+    padding: 12px;
+    background: linear-gradient(135deg,
+        rgba(20, 25, 30, 0.98) 0%,
+        rgba(15, 20, 25, 0.98) 100%);
+    border: 2px solid;
+    border-radius: 10px;
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.9),
+        0 0 0 1px currentColor,
+        0 0 0 8px rgba(var(--tooltip-color-rgb, 72, 156, 203), 0.1);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    pointer-events: none;
+}
+
+.player-attributes-score-item:hover .player-attributes-hover-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(4px);
+}
+
+/* Strengths section */
+.player-attributes-strengths-container {
+    height: 15%;
+    background: linear-gradient(180deg,
+        rgba(20, 25, 30, 0.95) 0%,
+        rgba(15, 20, 25, 0.98) 100%);
+    border-top: 1px solid rgba(72, 156, 203, 0.2);
+    border-radius: 0 0 var(--card-radius) var(--card-radius);
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    margin-top: 4px;
+}
+
+.player-attributes-strengths-header {
+    font-size: clamp(11px, 1.3vh, 13px);
+    font-weight: normal;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    font-style: italic;
+    padding: 4px;
+    margin: 0;
+}
+
+/* Color coding */
+.player-attributes-score-item[data-category="physical"] {
+    --category-color: #ff6384;
+    --category-border-color: rgba(255, 99, 132, 0.3);
+    --score-color: #ff6384;
+    --tooltip-color-rgb: 74, 255, 124;
+}
+
+.player-attributes-score-item[data-category="mental"] {
+    --category-color: #489ccb;
+    --category-border-color: rgba(72, 156, 203, 0.3);
+    --score-color: #489ccb;
+    --tooltip-color-rgb: 72, 156, 203;
+}
+
+.player-attributes-score-item[data-category="technical_creation"] {
+    --category-color: #ff9f43;
+    --category-border-color: rgba(255, 159, 67, 0.3);
+    --score-color: #ff9f43;
+    --tooltip-color-rgb: 255, 159, 67;
+}
+
+.player-attributes-score-item[data-category="technical_defense"] {
+    --category-color: #4aff7c;
+    --category-border-color: rgba(74, 255, 124, 0.3);
+    --score-color: #4aff7c;
+    --tooltip-color-rgb: 255, 99, 132;
+}
+
+.player-attributes-score-item[data-category="technical_attack"] {
+    --category-color: #c56cf0;
+    --category-border-color: rgba(197, 108, 240, 0.3);
+    --score-color: #c56cf0;
+    --tooltip-color-rgb: 197, 108, 240;
+}
+
+/* Overall special color */
+.player-attributes-overall-item {
+    --category-color: var(--accent);
+    --score-color: var(--accent);
+    --tooltip-color-rgb: 72, 156, 203;
+}
+
+/* Apply colors to hover tooltips */
+.player-attributes-score-item[data-category="physical"] .player-attributes-hover-tooltip {
+    border-color: #ff6384;
+}
+
+.player-attributes-score-item[data-category="mental"] .player-attributes-hover-tooltip {
+    border-color: #489ccb;
+}
+
+.player-attributes-score-item[data-category="technical_creation"] .player-attributes-hover-tooltip {
+    border-color: #ff9f43;
+}
+
+.player-attributes-score-item[data-category="technical_defense"] .player-attributes-hover-tooltip {
+    border-color: #4aff7c;
+}
+
+.player-attributes-score-item[data-category="technical_attack"] .player-attributes-hover-tooltip {
+    border-color: #c56cf0;
+}
+
+
+/* Hover tooltip - dynamic positioning */
+.player-attributes-hover-tooltip {
+    position: absolute;
+    width: 240px;
+    max-width: min(90vw, 300px);
+    padding: 12px;
+    background: linear-gradient(135deg,
+        rgba(20, 25, 30, 0.98) 0%,
+        rgba(15, 20, 25, 0.98) 100%);
+    border: 2px solid;
+    border-radius: 10px;
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.9),
+        0 0 0 1px currentColor,
+        0 0 0 8px rgba(var(--tooltip-color-rgb, 72, 156, 203), 0.1);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    pointer-events: none;
+
+    /* Default position (above) */
+    top: auto;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+}
+
+/* Smart positioning based on available space */
+.player-attributes-score-item:hover .player-attributes-hover-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* If tooltip would be cut off at the top, show it below */
+.player-attributes-score-item:nth-child(n+4):hover .player-attributes-hover-tooltip {
+    /* For items in bottom rows, show tooltip above */
+    top: auto;
+    bottom: calc(100% + 8px);
+}
+
+.player-attributes-score-item:nth-child(-n+3):hover .player-attributes-hover-tooltip {
+    /* For items in top rows, show tooltip below */
+    top: calc(100% + 8px);
+    bottom: auto;
+}
+
+/* For middle items, check dynamically with JavaScript or show above */
+.player-attributes-score-item:nth-child(4):hover .player-attributes-hover-tooltip,
+.player-attributes-score-item:nth-child(5):hover .player-attributes-hover-tooltip {
+    top: auto;
+    bottom: calc(100% + 8px);
+}
+
+/* Overall item tooltip - always above */
+.player-attributes-overall-item:hover .player-attributes-hover-tooltip {
+    top: auto;
+    bottom: calc(100% + 8px);
+    transform: translateX(-50%) translateY(0);
+}
+
+
+/* ============================================
+   PLAYER ATTRIBUTES TABLE (Comparison View)
+   ============================================ */
+
+/* Main table container */
+.player-attributes-table-area {
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    flex: 1 1 auto;
+    position: relative;
+    background: transparent;
+    overflow: hidden;
+}
+
+/* Plotly table specific overrides */
+.player-attributes-table-area .dash-graph,
+.player-attributes-table-area .js-plotly-plot,
+.player-attributes-table-area .plot-container.plotly {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    background: transparent !important;
+}
+
+/* Table container */
+.player-attributes-table-area .table {
+    height: 100% !important;
+    overflow: hidden !important;
+    background: transparent !important;
+}
+
+/* Table scroll area */
+.player-attributes-table-area .scroll-area-clip-rect {
+    stroke: none !important;
+    fill: none !important;
+}
+
+/* Column headers */
+.player-attributes-table-area .header .cell-rect {
+    fill: rgba(20, 25, 30, 0.95) !important;
+    stroke: rgba(255, 255, 255, 0.1) !important;
+    stroke-width: 1.5px !important;
+    rx: 4px !important;
+    ry: 4px !important;
+}
+
+.player-attributes-table-area .header .cell-text {
+    font-family: 'Arial', 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    fill: var(--accent) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Body cells - category colors */
+.player-attributes-table-area .body .cell-rect {
+    /* Default fallback */
+    fill: rgba(72, 156, 203, 0.1) !important;
+    stroke: rgba(255, 255, 255, 0.05) !important;
+    stroke-width: 0.5px !important;
+    rx: 3px !important;
+    ry: 3px !important;
+}
+
+/* Cell text */
+.player-attributes-table-area .body .cell-text {
+    font-family: 'Arial', 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 11px !important;
+    font-weight: normal !important;
+    fill: rgba(255, 255, 255, 0.95) !important;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Percentile column text */
+.player-attributes-table-area .body .y-column:nth-child(3) .cell-text {
+    font-weight: 500 !important;
+    fill: var(--accent) !important;
+}
+
+/* Title styling */
+.player-attributes-table-area .gtitle text {
+    font-family: 'Arial', 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    fill: var(--accent) !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Legend/annotations */
+.player-attributes-table-area .annotation-text {
+    font-family: 'Arial', 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 10px !important;
+    fill: rgba(204, 204, 204, 0.8) !important;
+}
+
+/* Invisible scroll styling */
+.player-attributes-table-area .scrollbar {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.player-attributes-table-area .scrollbar:hover {
+    opacity: 0.3 !important;
+}
+
+/* Scrollbar track - invisible by default */
+.player-attributes-table-area .scrollbar-slider line.scrollbar-glyph {
+    stroke-opacity: 0 !important;
+}
+
+/* Scrollbar thumb - visible on hover only */
+.player-attributes-table-area:hover .scrollbar-slider line.scrollbar-glyph {
+    stroke: var(--accent) !important;
+    stroke-opacity: 0.5 !important;
+    stroke-width: 6px !important;
+    stroke-linecap: round !important;
+}
+
+/* Custom scrollbar for webkit browsers (invisible by default) */
+.player-attributes-table-area .table::-webkit-scrollbar {
+    width: 6px !important;
+    height: 6px !important;
+    opacity: 0 !important;
+}
+
+.player-attributes-table-area .table::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border-radius: 3px !important;
+    margin: 2px !important;
+    opacity: 0 !important;
+}
+
+.player-attributes-table-area .table::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg,
+        rgba(72, 156, 203, 0.3) 0%,
+        rgba(74, 255, 124, 0.3) 100%);
+    border-radius: 3px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    opacity: 0 !important;
+}
+
+/* Show scrollbar on container hover */
+.player-attributes-table-area:hover .table::-webkit-scrollbar-thumb,
+.player-attributes-table-area:hover .table::-webkit-scrollbar-track {
+    opacity: 1 !important;
+    transition: opacity 0.3s ease;
+}
+
+/* Disable plotly modebar */
+.player-attributes-table-area .modebar {
+    display: none !important;
+}
+
+/* Make sure table doesn't interfere with tile hover */
+.player-attributes-table-area .table {
+    pointer-events: auto !important;
+}
+
+.player-attributes-table-area .body .column-cell:focus .cell-rect {
+    animation: highlight-row 0.5s ease-in-out;
+}
+
+/* Accessibility focus styles */
+.player-attributes-table-area .body .column-cell:focus-visible .cell-rect {
+    stroke: var(--accent-2) !important;
+    stroke-width: 2px !important;
+    outline: none !important;
+}
+
+
+/* ============================================
+   PLAYER TRACKING WIDGET
+   ============================================ */
+
+/* Main tracking container */
+#player-tracking-graph .dash-graph,
+#player-tracking-graph .js-plotly-plot,
+#player-tracking-graph .plot-container.plotly {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    flex: 1 !important;
+    background: transparent !important;
+    position: relative !important;
+}
+
+#player-tracking-graph .user-select-none.svg-container {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    min-width: 0 !important;
+    position: relative !important;
+    background: transparent !important;
+}
+
+#player-tracking-graph .main-svg {
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    background: transparent !important;
+    border-radius: 8px;
+}
+
+/* Pitch background enhancements */
+#player-tracking-graph .bglayer .bg {
+    fill: rgba(0, 0, 0, 0) !important;
+}
+
+#player-tracking-graph .cartesianlayer .shapelayer path {
+    stroke: rgba(255, 255, 255, 0.15) !important;
+    stroke-width: 1.5px !important;
+}
+
+/* Heatmap styling - more subtle */
+#player-tracking-graph .heatmaplayer image {
+    image-rendering: optimizeQuality !important;
+    opacity: 0.85 !important;
+    mix-blend-mode: screen !important;
+}
+
+/* Colorbar - MUCH MORE DISCREET AND MINIMALIST */
+#player-tracking-graph .colorbar {
+    opacity: 0.7 !important;
+    transition: opacity 0.3s ease !important;
+}
+
+#player-tracking-graph:hover .colorbar {
+    opacity: 0.9 !important;
+}
+
+/* Colorbar background - transparent */
+#player-tracking-graph .cbbg {
+    fill: rgba(0, 0, 0, 0) !important;
+    stroke: none !important;
+}
+
+/* Colorbar gradient - subtle */
+#player-tracking-graph .cbfill.gradient_filled {
+    rx: 12px !important;
+    ry: 12px !important;
+    width: 10% !important;
+    stroke: rgba(255, 255, 255, 0.1) !important;
+    stroke-width: 0.5px !important;
+}
+
+/* Colorbar outline - very subtle */
+#player-tracking-graph .cboutline {
+    stroke: rgba(255, 255, 255, 0.08) !important;
+    stroke-width: 0.5px !important;
+    rx: 12px !important;
+    ry: 12px !important;
+    width: 10% !important;
+    fill: none !important;
+}
+
+/* Colorbar ticks - remove completely */
+#player-tracking-graph .cbaxis .ycbcf4f6ctick {
+    display: none !important;
+    opacity: 0 !important;
+}
+
+#player-tracking-graph .cbaxis text {
+    fill: rgba(255, 255, 255, 0) !important;
+    font-size: 0 !important;
+}
+
+/* Colorbar title - remove completely */
+#player-tracking-graph .cbtitleunshift,
+#player-tracking-graph .cbtitle,
+#player-tracking-graph .ycbcf4f6ctitle {
+    display: none !important;
+    opacity: 0 !important;
+}
+
+/* Legend styling - improved */
+#player-tracking-graph .legend {
+    background: rgba(20, 25, 30, 0.85) !important;
+    backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(72, 156, 203, 0.2) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+    padding: 4px !important;
+}
+
+#player-tracking-graph .legend .bg {
+    fill: rgba(0, 0, 0, 0) !important;
+    stroke: none !important;
+}
+
+#player-tracking-graph .legendtext {
+    font-family: 'Segoe UI', 'Inter', 'Arial', sans-serif !important;
+    font-size: 11px !important;
+    fill: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500 !important;
+}
+
+#player-tracking-graph .legend .legendpoints path {
+    stroke-width: 1px !important;
+    stroke: rgba(255, 255, 255, 0.2) !important;
+    rx: 3px !important;
+    ry: 3px !important;
+}
+
+/* Shot markers - improved styling */
+#player-tracking-graph .scatterlayer .scatterpts {
+    stroke: rgba(255, 255, 255, 0.15) !important;
+    stroke-width: 0.8px !important;
+    transition: all 0.2s ease !important;
+}
+
+#player-tracking-graph .scatterlayer .scatterpts:hover {
+    stroke: rgba(255, 255, 255, 0.4) !important;
+    stroke-width: 1.2px !important;
+    filter: drop-shadow(0 2px 6px rgba(255, 255, 255, 0.2)) !important;
+}
+
+/* Center spot - more subtle */
+#player-tracking-graph .scatterlayer .point[transform*="77.5,228"] {
+    opacity: 0.3 !important;
+    stroke-width: 0 !important;
+}
+
+/* Tooltip styling - matching design */
+#player-tracking-graph .hoverlayer .hovertext {
+    background: linear-gradient(135deg,
+        rgba(20, 25, 30, 0.98) 0%,
+        rgba(15, 20, 25, 0.98) 100%) !important;
+    border: 1px solid rgba(72, 156, 203, 0.3) !important;
+    border-radius: 8px !important;
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.8),
+        0 0 0 1px var(--accent),
+        0 0 0 6px rgba(72, 156, 203, 0.15) !important;
+    backdrop-filter: blur(8px) !important;
+    padding: 8px 10px !important;
+    font-family: inherit !important;
+}
+
+/* Modebar - hidden */
+#player-tracking-graph .modebar-container,
+#player-tracking-graph .modebar {
+    display: none !important;
+}
+
+/* Enhanced hover effects for the entire widget */
+#player-tracking-graph {
+    position: relative;
+}
+
+#player-tracking-graph::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg,
+        rgba(72, 156, 203, 0.1),
+        rgba(74, 255, 124, 0.1),
+        rgba(72, 156, 203, 0.1));
+    border-radius: 10px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.tile:hover #player-tracking-graph::before {
+    opacity: 1;
+}
+
+/* Animation for new data loading */
+@keyframes tracking-pulse {
+    0% { opacity: 0.7; }
+    50% { opacity: 0.9; }
+    100% { opacity: 0.7; }
+}
+
+#player-tracking-graph.loading .heatmaplayer image {
+    animation: tracking-pulse 1.5s ease-in-out infinite;
+}
+
+/* Custom scrollbars for Plotly if needed */
+#player-tracking-graph .scrollbar-slider line.scrollbar-glyph {
+    stroke: var(--accent) !important;
+    stroke-opacity: 0.3 !important;
+    stroke-width: 4px !important;
+    stroke-linecap: round !important;
+}
+
+#player-tracking-graph:hover .scrollbar-slider line.scrollbar-glyph {
+    stroke-opacity: 0.5 !important;
+}
+
+/* Goal styling - more distinct */
+#player-tracking-graph .scatterlayer .tracec41a38 .scatterpts {
+    stroke: rgba(255, 255, 255, 0.2) !important;
+}
+
+#player-tracking-graph .scatterlayer .tracec41a38 .scatterpts:hover {
+    stroke: rgba(255, 255, 255, 0.4) !important;
+    filter: drop-shadow(0 0 8px rgba(74, 255, 124, 0.3)) !important;
+}

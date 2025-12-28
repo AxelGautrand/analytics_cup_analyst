@@ -1,0 +1,173 @@
+/*
+ * Page-Specific Styles
+ * Styles unique to specific pages or page types.
+ */
+
+/* ===== HEADER COMPONENT ===== */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  z-index: var(--z-header);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: height var(--transition-header),
+              box-shadow var(--transition-header);
+  background: var(--header-gradient);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(6px);
+}
+
+.header.shrink {
+  height: 62px;
+}
+
+.header-inner {
+  width: calc(100% - 40px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Header Left Section */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-logo {
+  height: 36px;
+  width: 36px;
+  object-fit: contain;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.01);
+  padding: 4px;
+}
+
+.header-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--c3);
+}
+
+/* Header Right Section */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+/* ===== SIDEBAR COMPONENT ===== */
+.sidebar {
+  position: fixed;
+  top: calc(var(--header-height) + 8px);
+  left: 0;
+  width: 64px;
+  height: calc(100vh - (var(--header-height) + 8px));
+  background: var(--sidebar-gradient);
+  padding: 8px;
+  transition: width var(--transition-sidebar),
+              padding var(--transition-sidebar);
+  border-right: 1px solid rgba(255, 255, 255, 0.02);
+  z-index: var(--z-sidebar);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+.sidebar:hover {
+  width: 240px;
+  align-items: flex-start;
+  padding-left: 12px;
+  overflow: hidden;
+}
+
+/* Sidebar List */
+.sidebar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+  justify-content: space-between;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Navigation Buttons */
+.nav-btn {
+  width: 48px;
+  height: 48px;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.sidebar:hover .nav-btn {
+  /* When expanded, align icon + label on the same top baseline so wrapped labels
+  remain visually anchored next to the emoji */
+  min-height: 48px;
+  height: auto;
+  width: calc(100% - 24px);
+  justify-content: flex-start;
+  padding-left: 12px;
+  align-items: center;
+  text-align: left;
+  gap: 12px;
+  display: flex;
+  flex-direction: row;
+}
+
+.nav-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.nav-label {
+  display: none;
+  font-weight: 600;
+  color: var(--c3);
+  flex-grow: 1;
+}
+
+/* Show labels when sidebar is expanded */
+.sidebar:hover .nav-label {
+  display: inline;
+  white-space: normal;
+  line-height: 1.25;
+}
+
+/* ===== PAGE TITLE ===== */
+.page-title {
+  margin: 0 0 6px 0;
+  color: var(--c3);
+}
+
+/* ===== SMALL GRID-STACK VARIANT ===== */
+.grid-stack[data-editable="false"] {
+  display: inline-block;
+  min-width: 180px;
+  max-width: 320px;
+}

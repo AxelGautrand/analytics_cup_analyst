@@ -1,0 +1,26 @@
+{
+  "off_ball_runs_fast": {
+    "count": "len"
+  },
+  "off_ball_runs": {
+    "count": "len",
+    "avg_speed": "speed_avg.mean",
+    "distance_sum": "distance_covered.sum",
+    "dangerous_count": "dangerous.sum"
+  },
+
+  "player_style_profile": {
+    "count": "len"
+  },
+
+  "player_attributes": {
+    "count": "len",
+    "sum_passing_option_score": "passing_option_score.sum",
+    "mean_passing_decision_delta": "passing_decision_delta.mean",
+    "mean_xloss_delta_under_pressure": "xloss_delta_under_pressure.mean",
+    "mean_xpass_delta": "xpass_delta.mean",
+    "mean_xcross_delta": "xcross_delta.mean",
+    "mean_shot_xg_delta": "shot_xg_delta.mean",
+    "mean_defender_distance_to_ball_carrier": "defender_distance_to_ball_carrier.mean"
+  }
+}

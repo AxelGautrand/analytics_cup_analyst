@@ -1,0 +1,88 @@
+/*
+ * CSS Custom Properties (Variables)
+ * Defines the color palette, spacing, and design tokens for the application.
+ */
+
+:root {
+  /* Primary Color Palette */
+  --c1: #4aff7c;  /* Electric green - primary accent */
+  --c2: #489ccb;  /* Sky blue - secondary accent */
+  --c3: #e8e8e7;  /* Light gray - text primary */
+  --c4: #6cbfcf;  /* Cyan - tertiary accent */
+  --c5: #236883;  /* Deep blue - dark accents */
+  --c6: #75ff9c;  /* Light green - highlights */
+  --c7: #90c4b1;  /* Mint green - subtle accents */
+
+  /* Semantic Color Variables */
+  --accent: var(--c2);
+  --accent-2: var(--c1);
+
+  /* Background Colors */
+  --bg-very-dark: #000000;
+  --bg-dark: #050607;
+  --bg-mid: #071017;
+
+  /* Text Colors */
+  --text: #e6eef5;
+  --muted: rgba(230, 238, 245, 0.55);
+
+  /* UI Element Colors */
+  --panel: rgba(255, 255, 255, 0.03);
+  --tile-border: rgba(72, 156, 203, 0.10);
+  --hover-high: rgba(72, 156, 203, 0.12);
+
+  /* Spacing and Sizing */
+  --card-radius: 12px;
+  --header-height: 72px;
+
+  /* Grid System */
+  --gs-gap: 8px;
+  --cell-w: calc((100% - 7 * var(--gs-gap)) / 8);
+  --cell-h: 68px; /* 60px + margin 8px */
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.18s ease;
+  --transition-slow: 0.25s ease;
+  --transition-header: 220ms ease;
+  --transition-sidebar: 200ms ease;
+
+  /* Z-index Layers */
+  --z-header: 1200;
+  --z-sidebar: 200;
+  --z-add-helper: 10;
+  --z-tile-header: 3;
+
+  /* Shadows */
+  --shadow-tile: 0 10px 30px rgba(0, 0, 0, 0.6);
+  --shadow-tile-hover: 0 12px 36px rgba(0, 0, 0, 0.75);
+  --shadow-button: 0 2px 6px rgba(0, 0, 0, 0.35);
+  --shadow-modal: 0 0 15px rgba(72, 156, 203, 0.35);
+  --shadow-filter-card: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+/* Background Gradient Definitions */
+:root {
+  --bg-gradient:
+    radial-gradient(circle at 12% 18%, rgba(36, 104, 131, 0.06), transparent 18%),
+    radial-gradient(circle at 84% 82%, rgba(74, 255, 124, 0.03), transparent 18%),
+    linear-gradient(180deg, #000000 0%, #050608 30%, #071017 70%);
+
+  --header-gradient: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.55),
+    rgba(0, 0, 0, 0.28)
+  );
+
+  --sidebar-gradient: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.01),
+    rgba(255, 255, 255, 0.00)
+  );
+
+  --button-gradient: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.02)
+  );
+}

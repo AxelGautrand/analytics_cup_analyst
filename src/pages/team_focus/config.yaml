@@ -1,0 +1,45 @@
+# Teams Overview Page Configuration
+# This YAML file defines the widgets and layout for the Teams Overview page.
+
+page:
+  id: "team_focus"
+  title: "Teams Focus"
+  prefix: "team_focus"
+  layout: "grid"
+
+widgets:
+  # Compact Filter Widget - Shows team filter + gear icon
+  - id: "filters"
+    type: "compact_filter"
+    title: ""  # Empty title for compact view
+    position:
+      x: 9
+      y: 0
+      w: 3
+      h: 1
+    filter_types: ["match", "time_range", "player"]
+    compact_filters: ["team"]  # Only show team filter in compact tile
+    modal_title: "Advanced Filters - Teams Overview"
+    show_gear_icon: true
+    gear_icon: "✚"
+    styles:
+      display: "flex"
+      alignItems: "center"
+      gap: "10px"
+      padding: "8px 12px"
+
+  # Player Efficiency (Scatter Plot)
+  - id: "player-efficiency"
+    type: "chart"
+    title: "Player Efficiency"
+    visualization: "off_ball_runs"
+    data_source: "dynamic_events"
+    position:
+      x: 0
+      y: 1
+      w: 5
+      h: 3
+    options:
+      visualization_type: "scatter"
+      aggregation_context: "off_ball_runs_fast"
+    filters: ["team", "time_range"]

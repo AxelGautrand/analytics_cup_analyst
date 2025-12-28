@@ -1,0 +1,74 @@
+{
+  "off_ball_runs_fast": {
+    "off_ball_runs_all": "event_type == 'off_ball_run'",
+    "off_ball_runs_targeted": "event_type == 'off_ball_run' and targeted == True",
+    "off_ball_runs_received": "event_type == 'off_ball_run' and targeted == True and received == True",
+    "off_ball_runs_dangerous": "event_type == 'off_ball_run' and dangerous == True",
+    "off_ball_runs_in_finish": "event_type == 'off_ball_run' and team_in_possession_phase_type == 'finish'",
+    "off_ball_runs_in_create": "event_type == 'off_ball_run' and team_in_possession_phase_type == 'create'"
+  },
+  "pressing": {
+    "pressing_all": "event_type == 'on_ball_engagement'",
+    "pressing_successful": "event_type == 'on_ball_engagement' and stop_possession_danger == True",
+    "pressing_high": "event_type == 'on_ball_engagement' and team_out_of_possession_phase_type == 'high_block'"
+  },
+  "line_breaking": {
+    "line_breaking_options": "event_type == 'passing_option' and line_break == True",
+    "line_breaking_completed": "event_type == 'passing_option' and line_break == True and received == True"
+  },
+
+  "player_style_profile": {
+    "runs_in_behind":"event_type == 'off_ball_run' and event_subtype == 'behind'",
+    "runs_ahead_of_ball": "event_type == 'off_ball_run' and event_subtype == 'run_ahead_of_the_ball'",
+    "received_in_open_space":"event_type == 'player_possession' and start_type == 'pass_reception' and 'separation_start' >= 6",
+
+    "associations_runs": "event_type == 'off_ball_run' and event_subtype in ['coming_short', 'dropping_off','support']",
+    "quick_passes": "event_type == 'player_possession' and 'quick_pass' == True",
+    "received_in_tight_space": "event_type == 'player_possession' and start_type == 'pass_reception' and 'separation_start' <= 2",
+
+    "wide_actions": "in_to_out == True",
+    "interior_actions": "out_to_in == False",
+
+    "progressive_pass": "event_type == 'player_possession' and end_type == 'pass' and pass_ahead == True",
+    "line_break_pass": "event_type == 'player_possession' and end_type == 'pass' and (first_line_break or second_last_line_break or last_line_break or furthest_line_break)",
+
+    "last_line_break": "event_type == 'player_possession' and last_line_break",
+    "player_bypassed_possessions":"event_type == 'player_possession' and n_opponent_bypassed >= 1",
+    "moving_defensive_line_possessions": "event_type == 'player_possession' and ((attacking_side == 'left_to_right' and last_defensive_line_x_end < last_defensive_line_x_start) or (attacking_side == 'right_to_left' and last_defensive_line_x_end > last_defensive_line_x_start))",
+
+    "pressing": "event_type == 'on_ball_engagement'",
+
+    "shot": "end_type == 'shot'",
+    "dangerous_movement": "dangerous == True",
+
+    "aerial_duel": "is_header == True",
+    "aerial_target":"event_type == 'passing_option' and high_pass == True and targeted == True",
+
+    "off_ball_runs": "event_type == 'off_ball_run'",
+    "passing_options": "event_type == 'passing_option'",
+    "player_possessions": "event_type == 'player_possession'",
+    "passes": "event_type == 'player_possession' and end_type == 'pass'",
+    "pass_receptions": "event_type == 'player_possession' and start_type == 'pass_reception'",
+    "defensive_actions": "event_type == 'on_ball_engagement'",
+    "aerial_events":"is_header == True or high_pass == True",
+    "targeted":"event_type == 'passing_option and 'targeted' == True",
+    "all_events": ""
+  },
+
+  "player_attributes":
+  {
+    "header_successful": "is_header == True and (end_type.isin(['shot', 'clearance']) or (end_type == 'pass' and pass_outcome == 'successful'))",
+    "header_unsuccessful": "is_header == True and (end_type == 'pass' and pass_outcome == 'unsuccessful')",
+    "pressing_successful":"event_type == 'on_ball_engagement' and end_type.isin(['indirect_regain', 'direct_regain', 'direct_disruption', 'indirect_disruption])",
+    "ball_recovery": "defender_ball_recovery == True",
+
+    "off_ball_runs": "event_type == 'off_ball_run'",
+    "passing_options":"event_type == 'passing_option'",
+    "player_possession": "event_type == 'player_possession'",
+    "on_ball_engagement": "event_type == 'on_ball_engagement'",
+
+    "shot_close": "event_type == 'player_possession' and end_type == 'shot' and shot_distance_to_goal <= 15",
+    "shot_long": "event_type == 'player_possession' and end_type == 'shot' and shot_distance_to_goal > 15"
+  }
+
+}

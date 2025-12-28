@@ -1,0 +1,40 @@
+/*
+ * Utility Classes and Responsive Design
+ * Helper classes and responsive breakpoints.
+ */
+
+/* Responsive Design Breakpoints */
+@media (max-width: 900px) {
+  .search-bar {
+    width: 160px;
+  }
+
+  .sidebar:hover ~ .content {
+    margin-left: 200px;
+  }
+
+  .header-left .header-title {
+    display: none;
+  }
+}
+
+/* Responsive Tile Behavior */
+.content .tile {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Responsive Tile Body */
+.tile .tile-body {
+  max-height: 60vh;
+  overflow: auto;
+}
+
+/* TODO: FIXME markers - these need attention in future refactoring */
+
+/* FIXME: Find easier solution for duplicated grid stack styles */
+/* The following styles appear to be duplicates of earlier definitions */
+/* Consider consolidating these with the main grid stack styles */
+
+/* TODO: Review if these media queries need optimization */
+/* Current breakpoint at 900px - consider adding more for better responsiveness */

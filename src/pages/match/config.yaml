@@ -1,0 +1,17 @@
+page:
+  id: "players"
+  title: "Players Overview"
+  prefix: "players"
+
+widgets:
+  - id: "players-filters"
+    type: "compact_filter"
+    title: ""
+    position:
+      x: 9
+      y: 0
+      w: 3
+      h: 1
+    filter_types: ["match", "time_range", "player"]
+    compact_filters: ["team"]
+    modal_title: "Advanced Player Filters"

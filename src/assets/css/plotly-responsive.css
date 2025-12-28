@@ -1,0 +1,57 @@
+.grid-stack-item .tile-body {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+}
+
+.dash-graph {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+    min-width: 0 !important;
+}
+
+.js-plotly-plot {
+    flex: 1 !important;
+    display: flex !important;
+    min-height: 0 !important;
+    min-width: 0 !important;
+}
+
+.plot-container.plotly {
+    flex: 1 !important;
+    display: flex !important;
+    height: 100% !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.user-select-none.svg-container {
+    flex: 1 !important;
+    height: 100% !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    min-width: 0 !important;
+}
+
+.main-svg {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* For resizable widgets */
+.grid-stack-item.ui-resizable-resizing .tile-body,
+.grid-stack-item.ui-draggable-dragging .tile-body {
+    pointer-events: none !important;
+}
+
+/* Plotly-specific adjustments */
+.modebar-container {
+    z-index: 1000 !important;
+}
