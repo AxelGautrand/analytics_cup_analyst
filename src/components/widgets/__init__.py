@@ -59,7 +59,7 @@ WidgetRegistry.register(
 
 WidgetRegistry.register(
     widget_type="player_attributes",
-    widget_class=PlayerAttributesWidget,
+    widget_class=PlayerAttributesWidget, # type: ignore
     default_config={
         "widget_type": "chart",
         "data_source": "dynamic_events",
@@ -70,7 +70,7 @@ WidgetRegistry.register(
 
 WidgetRegistry.register(
     widget_type="player_heatmap",
-    widget_class=TrackingWidget,
+    widget_class=TrackingWidget, # type: ignore
     default_config={
         "widget_type": "heatmap",
         "data_source": ["dynamic_events", "tracking"],
