@@ -1,5 +1,5 @@
 # requirements.txt
-dash==2.15.0
+dash==3.3.0
 dash-bootstrap-components==1.6.0
 pandas==2.3.3
 numpy==2.3.4

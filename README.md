@@ -44,7 +44,7 @@ Thanks to its modular design and intuitive interface, the platform is also well 
 
 ## Video URL
 
-> **[Insert your 60-second demonstration video URL here]**
+https://youtu.be/LECzE20SO-s
 
 ---
 
