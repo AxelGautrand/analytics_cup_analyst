@@ -44,7 +44,7 @@ Thanks to its modular design and intuitive interface, the platform is also well 
 
 ## Video URL
 
-https://youtu.be/LECzE20SO-s
+https://youtu.be/PKp_EEcDAQU
 
 ---
 
